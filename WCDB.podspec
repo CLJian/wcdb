@@ -19,8 +19,15 @@ Pod::Spec.new do |wcdb|
   wcdb.watchos.deployment_target = "2.0"
   wcdb.tvos.deployment_target = "9.0"
   wcdb.source       = { :git => "https://github.com/Tencent/wcdb.git", :tag => "v1.0.7.5" }
-  wcdb.public_header_files = "objc/WCDB/WCDB.h", "objc/WCDB/**/*.{h,hpp}"
-  wcdb.source_files  = "objc/WCDB/WCDB.h", "objc/WCDB/**/*.{h,m,hpp,cpp,mm}"
+  
+  if ENV['DEBUG']
+    wcdb.source_files = ''
+    wcdb.ios.vendored_frameworks = 'SDK/*.framework'
+  else
+    wcdb.public_header_files = "objc/WCDB/WCDB.h", "objc/WCDB/**/*.{h,hpp}"
+    wcdb.source_files  = "objc/WCDB/WCDB.h", "objc/WCDB/**/*.{h,m,hpp,cpp,mm}"
+  end
+  
   wcdb.frameworks = "CoreFoundation", "Security", "Foundation"
   wcdb.ios.frameworks = "UIKit"
   wcdb.libraries = "z", "c++"
